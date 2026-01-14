@@ -408,6 +408,7 @@ const EmployeeDashboard = () => {
                     display: none;
                     background: #1e293b;
                     padding: 1rem;
+                    padding-top: max(2.5rem, env(safe-area-inset-top)); /* Safe area for status bar */
                     align-items: center;
                     justify-content: space-between;
                     border-bottom: 1px solid rgba(255,255,255,0.1);
@@ -458,6 +459,7 @@ const EmployeeDashboard = () => {
                         z-index: 999;
                         transition: left 0.3s ease;
                         border-right: 1px solid rgba(255,255,255,0.1);
+                        padding-top: max(1rem, env(safe-area-inset-top));
                     }
                     .sidebar.open {
                         left: 0; /* Slide in */
