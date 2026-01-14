@@ -18,6 +18,7 @@ const EmployeeDashboard = () => {
     const [notifications, setNotifications] = useState([]);
     const [showNotifications, setShowNotifications] = useState(false);
     const [orgId, setOrgId] = useState(null);
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(async (currentUser) => {
@@ -156,11 +157,24 @@ const EmployeeDashboard = () => {
 
     return (
         <div className="dashboard-container">
+
+            {/* Mobile Header */}
+            <div className="mobile-header">
+                <button className="hamburger-btn" onClick={() => setMobileMenuOpen(true)}>☰</button>
+                <span className="mobile-header-title">Employee Portal</span>
+                <div style={{ width: '40px' }}></div> {/* Spacer for balance */}
+            </div>
+
+            {/* Mobile Drawer Overlay */}
+            {mobileMenuOpen && <div className="drawer-overlay" onClick={() => setMobileMenuOpen(false)}></div>}
+
             {/* Sidebar */}
-            <div className="sidebar">
+            <div className={`sidebar ${mobileMenuOpen ? 'open' : ''}`}>
                 <div className="sidebar-header">
                     <div className="logo-icon">🏢</div>
                     <span className="sidebar-title">Employee Portal</span>
+                    {/* Close button for mobile */}
+                    <button className="close-sidebar-btn" onClick={() => setMobileMenuOpen(false)}>×</button>
                 </div>
 
                 <nav className="nav-menu">
@@ -381,23 +395,99 @@ const EmployeeDashboard = () => {
                     width: 260px;
                 }
 
+                /* Mobile Header Styles */
+                .mobile-header {
+                    display: none;
+                    background: #1e293b;
+                    padding: 1rem;
+                    align-items: center;
+                    justify-content: space-between;
+                    border-bottom: 1px solid rgba(255,255,255,0.1);
+                    position: sticky;
+                    top: 0;
+                    z-index: 900;
+                }
+                .hamburger-btn {
+                    background: none;
+                    border: none;
+                    color: white;
+                    font-size: 1.5rem;
+                    cursor: pointer;
+                }
+                .mobile-header-title {
+                    font-weight: 700;
+                    font-size: 1.1rem;
+                }
+                .drawer-overlay {
+                    position: fixed;
+                    top: 0; left: 0; width: 100vw; height: 100vh;
+                    background: rgba(0,0,0,0.5);
+                    z-index: 998;
+                    backdrop-filter: blur(2px);
+                }
+                .close-sidebar-btn {
+                    display: none; /* Hidden on desktop */
+                    background: none;
+                    border: none;
+                    color: white;
+                    font-size: 1.5rem;
+                    margin-left: auto;
+                    cursor: pointer;
+                }
+
                 @media (max-width: 768px) {
-                    .sidebar, .sidebar:hover {
-                        width: 100%;
-                        height: 65px;
-                        position: fixed;
-                        bottom: 0;
-                        left: 0;
-                        border-right: none;
-                        border-top: 1px solid rgba(255,255,255,0.1);
-                        flex-direction: row;
-                        justify-content: space-around;
-                        background: #1e293b;
-                        padding: 0;
-                        z-index: 999;
+                    .mobile-header {
+                        display: flex;
                     }
-                    .sidebar-header, .sidebar-footer {
-                        display: none;
+
+                    .sidebar {
+                        position: fixed;
+                        top: 0;
+                        left: -100%; /* Hidden by default */
+                        height: 100vh;
+                        width: 280px; /* Full drawer width */
+                        background: #1e293b;
+                        z-index: 999;
+                        transition: left 0.3s ease;
+                        border-right: 1px solid rgba(255,255,255,0.1);
+                    }
+                    .sidebar.open {
+                        left: 0; /* Slide in */
+                    }
+                    
+                    .sidebar:hover {
+                        width: 280px; /* Reset hover effect */
+                    }
+
+                    .sidebar-header {
+                        display: flex; /* Show header in drawer */
+                    }
+                    .close-sidebar-btn {
+                        display: block; /* Show close button in drawer */
+                    }
+                    .sidebar-footer {
+                         display: block; /* Show footer */
+                    }
+                    
+                    /* Reset nav item styles from previous bottom-bar iteration */
+                    .nav-item {
+                        flex-direction: row;
+                        justify-content: flex-start;
+                        border-right: none;
+                        padding: 1rem 1.5rem;
+                    }
+                    .nav-icon {
+                        margin-right: 1rem;
+                        margin-bottom: 0;
+                    }
+                    .nav-text {
+                        display: block;
+                        opacity: 1;
+                        transform: none;
+                    }
+                    .nav-item.active {
+                         border-right: 3px solid var(--color-primary, #6366f1);
+                         border-top: none;
                     }
                 }
 
@@ -465,26 +555,7 @@ const EmployeeDashboard = () => {
                 }
 
                 @media (max-width: 768px) {
-                    .nav-item {
-                        flex-direction: column;
-                        justify-content: center;
-                        padding: 5px;
-                        border-right: none;
-                    }
-                    .nav-item.active {
-                        border-right: none;
-                        border-top: 3px solid var(--color-primary, #6366f1);
-                        background: rgba(255,255,255,0.05);
-                        color: white !important;
-                    }
-                    .nav-icon {
-                        margin-right: 0;
-                        font-size: 1.4rem;
-                        margin-bottom: 2px;
-                    }
-                    .nav-text {
-                        display: none;
-                    }
+                    /* Restore standard list view for nav items in drawer */
                 }
 
                 .nav-item:hover, .nav-item.active {

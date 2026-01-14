@@ -49,6 +49,7 @@ const AdminDashboard = ({ org, orgId, onLogout }) => {
         status: 'Not Started'
     });
     const [editingTask, setEditingTask] = useState(null);
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
     useEffect(() => {
         fetchEmployees();
@@ -683,11 +684,25 @@ const AdminDashboard = ({ org, orgId, onLogout }) => {
 
     return (
         <div className="admin-container" style={org.theme}>
+            {/* Mobile Header */}
+            <div className="mobile-header">
+                <button className="hamburger-btn" onClick={() => setMobileMenuOpen(true)}>☰</button>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <div className="logo-icon" style={{ fontSize: '1.2rem', minWidth: 'auto', height: 'auto' }}>🛡️</div>
+                    <span className="mobile-header-title">Admin Panel</span>
+                </div>
+                <div style={{ width: '40px' }}></div>
+            </div>
+
+            {/* Mobile Drawer Overlay */}
+            {mobileMenuOpen && <div className="drawer-overlay" onClick={() => setMobileMenuOpen(false)}></div>}
+
             {/* Expandable Sidebar */}
-            <div className="sidebar">
+            <div className={`sidebar ${mobileMenuOpen ? 'open' : ''}`}>
                 <div className="sidebar-header">
                     <div className="logo-icon">🛡️</div>
                     <span className="sidebar-title">Admin Panel</span>
+                    <button className="close-sidebar-btn" onClick={() => setMobileMenuOpen(false)}>×</button>
                 </div>
 
                 <nav className="nav-menu">
@@ -1476,23 +1491,104 @@ const AdminDashboard = ({ org, orgId, onLogout }) => {
                     background: rgba(20, 20, 35, 0.95);
                 }
 
+                /* Mobile Header & Drawer CSS */
+                .mobile-header {
+                    display: none;
+                    background: #1e293b;
+                    padding: 1rem;
+                    align-items: center;
+                    justify-content: space-between;
+                    border-bottom: 1px solid rgba(255,255,255,0.1);
+                    position: sticky;
+                    top: 0;
+                    z-index: 900;
+                }
+                .hamburger-btn {
+                    background: none;
+                    border: none;
+                    color: white;
+                    font-size: 1.5rem;
+                    cursor: pointer;
+                }
+                .mobile-header-title {
+                    font-weight: 700;
+                    font-size: 1.1rem;
+                    color: white;
+                }
+                .drawer-overlay {
+                    position: fixed;
+                    top: 0; left: 0; width: 100vw; height: 100vh;
+                    background: rgba(0,0,0,0.5);
+                    z-index: 998;
+                    backdrop-filter: blur(2px);
+                }
+                .close-sidebar-btn {
+                    display: none;
+                    background: none;
+                    border: none;
+                    color: white;
+                    font-size: 1.5rem;
+                    margin-left: auto;
+                    cursor: pointer;
+                }
+
                 @media (max-width: 768px) {
-                    .sidebar, .sidebar:hover {
-                        width: 100%;
-                        height: 65px;
-                        position: fixed;
-                        bottom: 0;
-                        left: 0;
-                        border-right: none;
-                        border-top: 1px solid rgba(255, 255, 255, 0.1);
-                        flex-direction: row;
-                        justify-content: space-around;
-                        background: #1e293b;
-                        padding: 0;
-                        z-index: 999;
+                    .mobile-header {
+                        display: flex;
                     }
-                    .sidebar-header, .sidebar-footer {
-                        display: none;
+
+                    .sidebar {
+                        position: fixed;
+                        top: 0;
+                        left: -100%;
+                        height: 100vh;
+                        width: 280px;
+                        background: #1e293b;
+                        z-index: 999;
+                        transition: left 0.3s ease;
+                        border-right: 1px solid rgba(255,255,255,0.1);
+                        padding: 0;
+                        padding-top: 1rem;
+                    }
+                    .sidebar.open {
+                        left: 0;
+                    }
+                    
+                    .sidebar:hover {
+                        width: 280px;
+                    }
+
+                    .sidebar-header {
+                        display: flex; /* Show header in drawer */
+                        padding: 0 1rem; 
+                    }
+                    .close-sidebar-btn {
+                        display: block;
+                    }
+                    .sidebar-footer {
+                         display: block;
+                    }
+
+                    /* Reset Nav Items for Drawer */
+                    .nav-item {
+                        flex-direction: row;
+                        justify-content: flex-start;
+                        height: auto;
+                        padding: 1rem 1.5rem;
+                    }
+                    .nav-icon {
+                        margin-right: 0;
+                        margin-bottom: 0;
+                        min-width: 24px;
+                    }
+                    .nav-text {
+                        display: block;
+                        opacity: 1;
+                        margin-left: 1rem;
+                    }
+                    .nav-item.active {
+                        border-top: none;
+                        border-right: 3px solid var(--color-primary);
                     }
                 }
 
@@ -1566,27 +1662,7 @@ const AdminDashboard = ({ org, orgId, onLogout }) => {
                 }
 
                 @media (max-width: 768px) {
-                    .nav-item {
-                        flex-direction: column;
-                        justify-content: center;
-                        padding: 5px;
-                        border-radius: 0;
-                        height: 100%;
-                    }
-                    .nav-icon {
-                        margin-right: 0;
-                        font-size: 1.4rem;
-                        margin-bottom: 2px;
-                        min-width: auto;
-                    }
-                    .nav-text {
-                        display: none; /* Hide text on mobile for simpler look */
-                    }
-                    .nav-item.active {
-                        border-top: 3px solid var(--color-primary);
-                        background: rgba(255,255,255,0.05);
-                        color: white;
-                    }
+                    /* Restore standard list view for nav items in drawer */
                 }
 
                 .nav-item:hover {
