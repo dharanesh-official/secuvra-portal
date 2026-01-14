@@ -475,19 +475,24 @@ const EmployeeDashboard = () => {
                         justify-content: flex-start;
                         border-right: none;
                         padding: 1rem 1.5rem;
+                        width: 100%; /* Ensure full width */
                     }
                     .nav-icon {
                         margin-right: 1rem;
                         margin-bottom: 0;
+                        font-size: 1.5rem; /* Slightly larger icons */
                     }
                     .nav-text {
                         display: block;
                         opacity: 1;
                         transform: none;
+                        font-size: 1rem;
+                        font-weight: 500;
                     }
                     .nav-item.active {
-                         border-right: 3px solid var(--color-primary, #6366f1);
-                         border-top: none;
+                         border: none; /* No border for mobile style */
+                         background: rgba(255, 255, 255, 0.1) !important; /* Lighter background for entire row */
+                         color: white !important;
                     }
                 }
 

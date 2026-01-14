@@ -1587,8 +1587,9 @@ const AdminDashboard = ({ org, orgId, onLogout }) => {
                         margin-left: 1rem;
                     }
                     .nav-item.active {
-                        border-top: none;
-                        border-right: 3px solid var(--color-primary);
+                        border: none;
+                        background: rgba(255, 255, 255, 0.1) !important;
+                        color: white !important;
                     }
                 }
 
