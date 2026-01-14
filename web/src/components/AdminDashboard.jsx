@@ -839,8 +839,13 @@ const AdminDashboard = ({ org, orgId, onLogout }) => {
                     <div className="content-wrapper fade-in">
                         <div className="toolbar">
                             <h2>Employee Directory</h2>
-                            <button onClick={() => setShowAddForm(!showAddForm)} className="btn-modern-secondary">
-                                {showAddForm ? 'Cancel' : '+ Add Employee'}
+                            <button onClick={() => setShowAddForm(!showAddForm)} className="btn-add-action">
+                                {showAddForm ? 'Cancel' : (
+                                    <>
+                                        <span style={{ marginRight: '0.5rem', fontSize: '1.1rem' }}>+</span>
+                                        Add Employee
+                                    </>
+                                )}
                             </button>
                         </div>
 
@@ -1833,6 +1838,30 @@ const AdminDashboard = ({ org, orgId, onLogout }) => {
                     border-color: var(--color-primary);
                     color: var(--color-primary);
                     background: rgba(99, 102, 241, 0.1);
+                }
+
+                .btn-add-action {
+                    background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+                    border: none;
+                    color: white;
+                    padding: 0.75rem 1.5rem;
+                    border-radius: 10px;
+                    cursor: pointer;
+                    font-weight: 600;
+                    display: flex;
+                    align-items: center;
+                    box-shadow: 0 4px 15px var(--color-primary-glow);
+                    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                }
+
+                .btn-add-action:hover {
+                    transform: translateY(-2px);
+                    box-shadow: 0 8px 25px var(--color-primary-glow);
+                    filter: brightness(1.1);
+                }
+                
+                .btn-add-action:active {
+                    transform: translateY(0);
                 }
                 
                 .truncate-cell {
