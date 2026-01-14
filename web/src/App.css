@@ -1,4 +1,10 @@
 /* App.css */
+html,
+body {
+  overflow-x: hidden;
+  width: 100%;
+}
+
 /* Hero Section */
 .app-container {
   display: flex;
@@ -124,6 +130,22 @@
 @media (max-width: 768px) {
   .title {
     font-size: 2.5rem;
+  }
+
+  .hero {
+    padding: 2rem 1rem;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+  }
+
+  .companies-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .navbar {
+    padding: 1rem 1.5rem;
   }
 }
 

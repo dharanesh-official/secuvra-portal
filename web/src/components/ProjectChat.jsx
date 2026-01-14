@@ -352,6 +352,18 @@ const ProjectChat = ({ projectId, orgId, user, onClose }) => {
                     transition: background 0.2s;
                 }
                 .chat-input-area button:hover { background: #4f46e5; }
+
+                @media (max-width: 768px) {
+                    .chat-input-area input {
+                        font-size: 16px;
+                    }
+                    .chat-container {
+                         border-radius: 0;
+                    }
+                    .close-btn {
+                        padding: 10px;
+                    }
+                }
             `}</style>
             </div>
         </div>

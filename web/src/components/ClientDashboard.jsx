@@ -351,6 +351,26 @@ const ClientDashboard = () => {
                     gap: 2rem;
                     margin-bottom: 3rem;
                 }
+                
+                @media (max-width: 768px) {
+                    .details-grid {
+                        grid-template-columns: 1fr;
+                        gap: 1rem;
+                    }
+                    .project-detail-card {
+                        padding: 1.5rem;
+                    }
+                    .project-header h1 {
+                        font-size: 1.8rem;
+                    }
+                    .client-header {
+                        padding: 1rem;
+                    }
+                    .main-area {
+                        padding: 0 1rem;
+                        margin-top: 2rem;
+                    }
+                }
                 .value {
                     font-size: 1.1rem;
                     font-weight: 500;

@@ -357,6 +357,12 @@ const EmployeeDashboard = () => {
                     font-family: 'Inter', sans-serif;
                 }
 
+                @media (max-width: 768px) {
+                    .dashboard-container {
+                        flex-direction: column;
+                    }
+                }
+
                 /* Sidebar Styles (Matching AdminDashboard) */
                 .sidebar {
                     width: 80px;
@@ -373,6 +379,26 @@ const EmployeeDashboard = () => {
 
                 .sidebar:hover {
                     width: 260px;
+                }
+
+                @media (max-width: 768px) {
+                    .sidebar, .sidebar:hover {
+                        width: 100%;
+                        height: 65px;
+                        position: fixed;
+                        bottom: 0;
+                        left: 0;
+                        border-right: none;
+                        border-top: 1px solid rgba(255,255,255,0.1);
+                        flex-direction: row;
+                        justify-content: space-around;
+                        background: #1e293b;
+                        padding: 0;
+                        z-index: 999;
+                    }
+                    .sidebar-header, .sidebar-footer {
+                        display: none;
+                    }
                 }
 
                 .sidebar-header {
@@ -413,6 +439,16 @@ const EmployeeDashboard = () => {
                     flex-direction: column;
                     gap: 0.5rem;
                 }
+                
+                @media (max-width: 768px) {
+                    .nav-menu {
+                        flex-direction: row;
+                        width: 100%;
+                        justify-content: space-around;
+                        padding: 0;
+                        gap: 0;
+                    }
+                }
 
                 .nav-item {
                     display: flex;
@@ -426,6 +462,29 @@ const EmployeeDashboard = () => {
                     text-align: left;
                     width: 100%;
                     font-size: 1rem;
+                }
+
+                @media (max-width: 768px) {
+                    .nav-item {
+                        flex-direction: column;
+                        justify-content: center;
+                        padding: 5px;
+                        border-right: none;
+                    }
+                    .nav-item.active {
+                        border-right: none;
+                        border-top: 3px solid var(--color-primary, #6366f1);
+                        background: rgba(255,255,255,0.05);
+                        color: white !important;
+                    }
+                    .nav-icon {
+                        margin-right: 0;
+                        font-size: 1.4rem;
+                        margin-bottom: 2px;
+                    }
+                    .nav-text {
+                        display: none;
+                    }
                 }
 
                 .nav-item:hover, .nav-item.active {
@@ -469,6 +528,23 @@ const EmployeeDashboard = () => {
                     flex: 1;
                     padding: 3rem;
                     overflow-y: auto;
+                }
+
+                @media (max-width: 768px) {
+                    .main-content {
+                        padding: 1rem;
+                        padding-bottom: 80px; 
+                    }
+                    .projects-grid {
+                        grid-template-columns: 1fr;
+                        gap: 1rem;
+                    }
+                    .welcome-banner {
+                        margin-bottom: 1.5rem;
+                    }
+                    .welcome-banner h1 {
+                        font-size: 1.8rem;
+                    }
                 }
 
                 .welcome-banner {

@@ -1450,6 +1450,12 @@ const AdminDashboard = ({ org, orgId, onLogout }) => {
                     color: white;
                 }
 
+                @media (max-width: 768px) {
+                    .admin-container {
+                        flex-direction: column;
+                    }
+                }
+
                 /* Sidebar */
                 .sidebar {
                     width: 80px;
@@ -1468,6 +1474,26 @@ const AdminDashboard = ({ org, orgId, onLogout }) => {
                 .sidebar:hover {
                     width: 280px;
                     background: rgba(20, 20, 35, 0.95);
+                }
+
+                @media (max-width: 768px) {
+                    .sidebar, .sidebar:hover {
+                        width: 100%;
+                        height: 65px;
+                        position: fixed;
+                        bottom: 0;
+                        left: 0;
+                        border-right: none;
+                        border-top: 1px solid rgba(255, 255, 255, 0.1);
+                        flex-direction: row;
+                        justify-content: space-around;
+                        background: #1e293b;
+                        padding: 0;
+                        z-index: 999;
+                    }
+                    .sidebar-header, .sidebar-footer {
+                        display: none;
+                    }
                 }
 
                 /* Header */
@@ -1510,6 +1536,17 @@ const AdminDashboard = ({ org, orgId, onLogout }) => {
                     flex-direction: column;
                     gap: 0.5rem;
                     flex: 1;
+                    padding: 1rem 0;
+                }
+                
+                @media (max-width: 768px) {
+                    .nav-menu {
+                        flex-direction: row;
+                        width: 100%;
+                        justify-content: space-around;
+                        padding: 0;
+                        gap: 0;
+                    }
                 }
 
                 .nav-item {
@@ -1526,6 +1563,30 @@ const AdminDashboard = ({ org, orgId, onLogout }) => {
                     width: 100%;
                     overflow: hidden;
                     white-space: nowrap;
+                }
+
+                @media (max-width: 768px) {
+                    .nav-item {
+                        flex-direction: column;
+                        justify-content: center;
+                        padding: 5px;
+                        border-radius: 0;
+                        height: 100%;
+                    }
+                    .nav-icon {
+                        margin-right: 0;
+                        font-size: 1.4rem;
+                        margin-bottom: 2px;
+                        min-width: auto;
+                    }
+                    .nav-text {
+                        display: none; /* Hide text on mobile for simpler look */
+                    }
+                    .nav-item.active {
+                        border-top: 3px solid var(--color-primary);
+                        background: rgba(255,255,255,0.05);
+                        color: white;
+                    }
                 }
 
                 .nav-item:hover {
@@ -1576,6 +1637,39 @@ const AdminDashboard = ({ org, orgId, onLogout }) => {
                     padding: 2.5rem;
                     overflow-y: auto;
                     position: relative;
+                }
+
+                @media (max-width: 768px) {
+                    .main-content {
+                        padding: 1rem;
+                        padding-bottom: 80px; /* Space for bottom nav */
+                    }
+                    .page-title {
+                         font-size: 1.8rem;
+                    }
+                    .header-pro {
+                        flex-direction: column;
+                        align-items: flex-start;
+                        gap: 1rem;
+                        margin-bottom: 1.5rem;
+                    }
+                    .stats-grid {
+                        grid-template-columns: 1fr 1fr; /* Two columns */
+                        gap: 1rem;
+                    }
+                    .stat-value {
+                        font-size: 1.5rem;
+                    }
+                    .glass-card {
+                        padding: 1.5rem;
+                    }
+                    /* Force table horizontal scroll */
+                    .table-responsive {
+                        display: block;
+                        width: 100%;
+                        overflow-x: auto;
+                        -webkit-overflow-scrolling: touch;
+                    }
                 }
 
                 .header-pro {
