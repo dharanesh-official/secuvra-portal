@@ -532,11 +532,11 @@ const EmployeeDashboard = () => {
                 
                 @media (max-width: 768px) {
                     .nav-menu {
-                        flex-direction: row;
+                        flex-direction: column; /* Vertical stack for drawer */
                         width: 100%;
-                        justify-content: space-around;
-                        padding: 0;
-                        gap: 0;
+                        justify-content: flex-start;
+                        padding: 1rem 0;
+                        gap: 0.5rem;
                     }
                 }
 
