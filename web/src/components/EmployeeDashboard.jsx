@@ -129,6 +129,13 @@ const EmployeeDashboard = () => {
         const storedOrgId = localStorage.getItem('currentOrgId');
         if (!storedOrgId) return;
 
+        // Check project status before update
+        const proj = projects.find(p => p.id === projectId);
+        if (proj && proj.status === 'Completed') {
+            alert("This project is completed. You cannot change task status.");
+            return;
+        }
+
         try {
             // Update UI optimistically
             setTasksMap(prev => ({
@@ -323,6 +330,7 @@ const EmployeeDashboard = () => {
                                                                 onChange={(e) => handleTaskStatusChange(project.id, task, e.target.value)}
                                                                 className={`status-select ${task.status === 'Completed' ? 'completed' : (task.status === 'In Process' ? 'in-process' : '')}`}
                                                                 onClick={(e) => e.stopPropagation()} // Prevent card click
+                                                                disabled={project.status === 'Completed'}
                                                             >
                                                                 <option value="Not Started">Not Started</option>
                                                                 <option value="In Process">In Process</option>

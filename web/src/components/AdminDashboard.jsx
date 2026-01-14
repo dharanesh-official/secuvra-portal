@@ -540,9 +540,32 @@ const AdminDashboard = ({ org, orgId, onLogout }) => {
                 }
             }
         } else if (action === 'complete') {
+            // Fetch tasks to verify completion status
+            const tasksRef = collection(db, "companies", orgId, "projects", project.id, "tasks");
+            const tasksSnapshot = await getDocs(tasksRef);
+            const tasks = tasksSnapshot.docs.map(t => t.data());
+            const pendingTasks = tasks.filter(t => t.status !== 'Completed');
+
+            if (pendingTasks.length > 0) {
+                const confirm = await Swal.fire({
+                    title: 'Pending Tasks Found!',
+                    text: `There are ${pendingTasks.length} tasks not marked as Completed. Do you still want to complete the project?`,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#f59e0b',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, Complete Anyway',
+                    cancelButtonText: 'Cancel',
+                    background: '#1a1a2e',
+                    color: '#fff'
+                });
+
+                if (!confirm.isConfirmed) return;
+            }
+
             const confirm = await Swal.fire({
                 title: 'Mark as Completed?',
-                text: "This will mark the project as successfully completed.",
+                text: "This will mark the project as successfully completed. Tasks can no longer be updated.",
                 icon: 'question',
                 showCancelButton: true,
                 confirmButtonColor: '#10b981',
@@ -598,6 +621,11 @@ const AdminDashboard = ({ org, orgId, onLogout }) => {
         e.preventDefault();
         if (!selectedProject) return;
 
+        if (selectedProject.status === 'Completed') {
+            Swal.fire('Restricted', 'Cannot edit tasks for a completed project.', 'warning');
+            return;
+        }
+
         setLoading(true);
         try {
             const taskRef = collection(db, "companies", orgId, "projects", selectedProject.id, "tasks");
@@ -640,6 +668,10 @@ const AdminDashboard = ({ org, orgId, onLogout }) => {
     };
 
     const handleDeleteTask = async (taskId) => {
+        if (selectedProject.status === 'Completed') {
+            Swal.fire('Restricted', 'Cannot delete tasks for a completed project.', 'warning');
+            return;
+        }
         try {
             await deleteDoc(doc(db, "companies", orgId, "projects", selectedProject.id, "tasks", taskId));
             fetchTasks(selectedProject.id);
@@ -672,6 +704,10 @@ const AdminDashboard = ({ org, orgId, onLogout }) => {
     };
 
     const handleTaskStatusChange = async (task, newStatus) => {
+        if (selectedProject.status === 'Completed') {
+            Swal.fire('Restricted', 'Cannot update tasks for a completed project.', 'warning');
+            return;
+        }
         try {
             await updateDoc(doc(db, "companies", orgId, "projects", selectedProject.id, "tasks", task.id), {
                 status: newStatus
