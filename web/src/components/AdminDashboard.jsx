@@ -539,20 +539,35 @@ const AdminDashboard = ({ org, orgId, onLogout }) => {
                 }
             }
         } else if (action === 'complete') {
-            try {
-                await updateDoc(doc(db, "companies", orgId, "projects", project.id), {
-                    status: 'Completed'
-                });
-                fetchProjects();
-                Swal.fire({
-                    title: 'Completed!',
-                    text: 'Project marked as done.',
-                    icon: 'success',
-                    background: '#1a1a2e',
-                    color: '#fff'
-                });
-            } catch (error) {
-                console.error("Error updating project:", error);
+            const confirm = await Swal.fire({
+                title: 'Mark as Completed?',
+                text: "This will mark the project as successfully completed.",
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#10b981',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, Complete it',
+                background: '#1a1a2e',
+                color: '#fff'
+            });
+
+            if (confirm.isConfirmed) {
+                try {
+                    await updateDoc(doc(db, "companies", orgId, "projects", project.id), {
+                        status: 'Completed'
+                    });
+                    fetchProjects();
+                    Swal.fire({
+                        title: 'Completed!',
+                        text: 'Project marked as done.',
+                        icon: 'success',
+                        background: '#1a1a2e',
+                        color: '#fff'
+                    });
+                } catch (error) {
+                    console.error("Error updating project:", error);
+                    Swal.fire('Error', 'Failed to update status.', 'error');
+                }
             }
         }
     };
@@ -745,7 +760,10 @@ const AdminDashboard = ({ org, orgId, onLogout }) => {
                                                         <div key={n.id} className="notif-item">
                                                             <div className="notif-content" onClick={() => {
                                                                 const p = projects.find(proj => proj.id === n.projectId);
-                                                                if (p) handleOpenChat(p);
+                                                                if (p) {
+                                                                    handleOpenChat(p);
+                                                                    setShowNotifications(false);
+                                                                }
                                                             }}>
                                                                 <strong>New message in {n.projectName}</strong>
                                                                 <p className="notif-text"><strong>{n.sender}:</strong> {n.text}</p>

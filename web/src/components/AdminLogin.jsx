@@ -19,6 +19,11 @@ const AdminLogin = () => {
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
+        const storedAuth = localStorage.getItem(`admin_auth_${orgId}`);
+        if (storedAuth === 'true') {
+            setIsAuthenticated(true); // Optimistic UI update
+        }
+
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             if (user) {
                 // Check if user is admin for this org
@@ -29,14 +34,23 @@ const AdminLogin = () => {
 
                 if (isAuthorized) {
                     setIsAuthenticated(true);
+                    localStorage.setItem(`admin_auth_${orgId}`, 'true');
                 } else {
                     // If not authorized, sign out
                     auth.signOut();
                     setError('Access denied for this organization.');
+                    setIsAuthenticated(false);
+                    localStorage.removeItem(`admin_auth_${orgId}`);
                 }
             } else {
+                // Only unset if we don't have a persisted valid session (though firebase usually handles this)
+                // But wait, if firebase loads slowly, user might be null initially.
+                // We trust onAuthStateChanged to eventually fire with user if logged in.
+                // If it fires with null, then we strictly logout.
                 setIsAuthenticated(false);
+                localStorage.removeItem(`admin_auth_${orgId}`);
             }
+            setIsLoading(false); // Auth check done
         });
 
         return () => unsubscribe();
@@ -124,6 +138,7 @@ const AdminLogin = () => {
     const handleLogout = async () => {
         await auth.signOut();
         setIsAuthenticated(false);
+        localStorage.removeItem(`admin_auth_${orgId}`);
         setEmail('');
         setPassword('');
     };
