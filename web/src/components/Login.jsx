@@ -109,7 +109,7 @@ const Login = () => {
 
     return (
         <div className="app-container" style={{ justifyContent: 'center', alignItems: 'center', ...org.theme }}>
-            <div className="hero-bg-glow" style={{ top: '50%', transform: 'translate(-50%, -50%)', width: '800px', height: '800px' }}></div>
+            <div className="hero-bg-glow" style={{ top: '50%', transform: 'translate(-50%, -50%)', width: '800px', maxWidth: '100vw', height: '800px', maxHeight: '100vh' }}></div>
 
             <div className="glass" style={{ padding: '3rem', borderRadius: '24px', width: '100%', maxWidth: '450px', position: 'relative', zIndex: 10 }}>
                 <button

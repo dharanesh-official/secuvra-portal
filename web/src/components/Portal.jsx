@@ -16,10 +16,10 @@ const Portal = () => {
                 <div className="hero-bg-glow"></div>
 
                 <section className="companies-section">
-                    <h2 style={{ textAlign: 'center', fontSize: '1rem', textTransform: 'uppercase', letterSpacing: '0.2em', color: 'var(--color-primary)', marginBottom: '1rem' }}>
+                    <h2 className="subtitle-small" style={{ textAlign: 'center', textTransform: 'uppercase', letterSpacing: '0.2em', color: 'var(--color-primary)', marginBottom: '1rem' }}>
                         Centralized Gateway
                     </h2>
-                    <h1 className="title" style={{ textAlign: 'center', fontSize: '3rem', marginBottom: '3rem', marginTop: 0 }}>
+                    <h1 className="title" style={{ textAlign: 'center', marginBottom: '3rem', marginTop: 0 }}>
                         Choose Your <span className="gradient-text">Organization</span>
                     </h1>
                     <div className="companies-grid">
