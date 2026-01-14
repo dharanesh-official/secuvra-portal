@@ -1582,8 +1582,11 @@ const AdminDashboard = ({ org, orgId, onLogout }) => {
                         min-width: 24px;
                     }
                     .nav-text {
-                        display: block;
-                        opacity: 1;
+                        display: block !important;
+                        opacity: 1 !important;
+                        transform: none !important;
+                        font-size: 1rem;
+                        font-weight: 500;
                         margin-left: 1rem;
                     }
                     .nav-item.active {

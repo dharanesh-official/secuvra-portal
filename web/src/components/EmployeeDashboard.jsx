@@ -483,11 +483,12 @@ const EmployeeDashboard = () => {
                         font-size: 1.5rem; /* Slightly larger icons */
                     }
                     .nav-text {
-                        display: block;
-                        opacity: 1;
-                        transform: none;
+                        display: block !important;
+                        opacity: 1 !important;
+                        transform: none !important;
                         font-size: 1rem;
                         font-weight: 500;
+                        margin-left: 0; /* reset margin if needed */
                     }
                     .nav-item.active {
                          border: none; /* No border for mobile style */
